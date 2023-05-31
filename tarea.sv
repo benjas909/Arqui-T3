@@ -21,7 +21,7 @@ endmodule
 
 
 
-module mux8(input  logic [7:0] d,
+module mux8(input  logic [7:0] d1, d2,
             input  logic [2:0] s,
             output logic y);
 
@@ -144,12 +144,13 @@ module prefix4bit(input  logic [3:0] a, b,
   assign gi = leftgen | (leftpro & rightgen);
   assign pi = leftpro & rightpro;
 
-endmodule
+endmodule/*
+module ALU(input  logic [2:0] select,
+           input  logic [7:0] inm_A, inm_B,
+           output logic [7:0] result);
 
-
-module prefix8bit(input  logic [7:0] a, b,
-                  //  input  logic cin,
-                  //  output logic [7:0] s);
+  mux8 alu_mux(inm_A, inm_B, select, inm_A, inm_B);
+  */[7:0] s);
                   output logic gi, pi);
             
   logic leftgen, leftpro, rightgen, rightpro;
@@ -220,7 +221,6 @@ module prefixadder8(input  logic [7:0] a, b,
   assign p_8[1] = p_2[2] & p_4[1];
 
   assign g_8[0] = g[3] | (p[3] & g_4[1]);
-//  assign p_8[0] = p[3] & p_4[1];
   
 
   assign s[7] = (a[7] ^ b[7]) ^ g_8[3];
@@ -243,27 +243,66 @@ module splitter(input  logic [18:0] data
   assign inmB = data [7:0];
 endmodule
 
-//
-//module ALU(input  logic [2:0] select,
-//           input  logic [7:0] Inm_A, Inm_B,
-//           output logic)
-//
-//
-//
-//module main(input  logic clock);
-//  logic reset;
-//  logic [5:0] address;
-//  logic [18:0] databits;
-//  logic [2:0] select;
-//  logic [7:0] Inmediato_A, Inmediato_B;
-//
-//  
-//  counter count(clock, reset, address);
-//
-//  ROM datarom(address, databits);
-//
-//  splitter split(databits, select);
-//
-//
+
+module ALU_main(input  logic [7:0] inm_A, inm_B,
+           input  logic [2:0] select,
+           output logic [7:0] result);
   
+  logic [7:0] sum_result, sub_result, bleft, bright, and_res, or_res, xor_res, invA, invB;
+
+  
+  prefixadder8 sum(inm_A, inm_B, 1'b0, sum_result);
+  
+  not8 invert_sub(inm_B, inm_A, invB);
+
+  prefixadder8 sub(inm_A, invB, 1'b0, sub_result);
+
+  shift_left shift_L(inm_A, inm_B, bleft);
+
+  shift_right shift_R(inm_A, inm_B, bright);
+
+  and8 comp(inm_A, inm_B, and_res);
+
+  or8 dis(inm_A. inm_B, or_res);
+
+  xor8 exc(inm_A, inm_B, xor_res);
+
+  not8 invertA(inm_A, inm_B, invA);
+
+  always_comb
+    casex (select [2:0])
+      3'b000: result = sum_result;
+      3'b001: result = sub_result;
+      3'b010: result = bleft;
+      3'b011: result = bright;
+      3'b100: result = and_res;
+      3'b101: result = or_res;
+      3'b110: result = xor_res;
+      3'b111: result = invA;
+    endcase
+endmodule
+  
+
+
+
+
+module main(input  logic clock,
+            output logic [7:0] result);
+  
+  logic reset;
+  logic [5:0] address;
+  logic [18:0] databits;
+  logic [2:0] select;
+  logic [7:0] inmediato_A, inmediato_B;
+
+  
+  counter count(clock, reset, address);
+
+  ROM datarom(address, databits);
+
+  splitter split(databits, select, inmediato_A, inmediato_B);
+
+  ALU ALU_main(inmediato_A, inmediato_B, select, result);
+  
+
 
