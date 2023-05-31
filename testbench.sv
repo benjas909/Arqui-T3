@@ -1,22 +1,20 @@
-/*
 module testprefixadder();
   logic [7:0] a, b;
   logic cin;
   logic [7:0] s;
   
+  
   prefixadder8 add_test(a, b, cin, s);
   
   initial begin
-    a = 00010111; b = 00010011; cin = 0; #10;
-    $display("s = %b", s);
-    assert (s === 0101010) else $error ("first sum failed");
-    a = 00000111; b = 01001100; cin = 0; #10;
-    $display("s = %b", s);
-    assert (s === 01010011) else $error ("second sum failed");
+    a = 8'b00010111; b = 8'b00010011; cin = 0; #27;
+    assert (s === 8'b0101010) else $error ("first sum failed");
+    a = 8'b00000111; b = 8'b01001100; cin = 0; #10;
+    assert (s === 8'b01010011) else $error ("second sum failed");
     
   end
 endmodule
-*/
+
 
 /*
 module test1bitprefix();
@@ -39,7 +37,7 @@ module test1bitprefix();
     $display ("11, g = %b, p = %b", g, p);
   end
 endmodule
-*/
+
 
 
 module test2bitprefix();
@@ -72,7 +70,7 @@ module test2bitprefix();
     if(~reset) begin
       if({gi, pi} !== gp_expected) begin
         $display("Error: inputs = %b, %b", a, b);
-        $display("outputs = &b, %b (%b and %b expected)", gi, pi, gp_expected[1], gp_expected[0]);
+        $display("outputs = %b, %b (%b and %b expected)", gi, pi, gp_expected[1], gp_expected[0]);
         errors = errors + 1;
       end
       vectornum = vectornum + 1;
@@ -82,5 +80,4 @@ module test2bitprefix();
       end
     end
 endmodule
-  
-  
+*/
