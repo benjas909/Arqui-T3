@@ -16,6 +16,22 @@ module testprefixadder();
 endmodule
 
 
+module maintestbench();
+  timeunit 1ms;
+  reg Clock = 0;
+  logic reset;
+  logic [7:0] result;
+
+  always
+  begin
+    #5 Clock = 1;
+    #5 Clock = 0;
+  end
+  
+
+  main dut(Clock, result);
+  
+
 /*
 module test2bitprefix();
   logic 	   clk, reset;

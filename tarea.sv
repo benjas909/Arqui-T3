@@ -104,6 +104,7 @@ module ROM(input  logic [5:0] address,
       6'h6: databits = 19'b1100101110101010010;
       6'h7: databits = 19'b1110101110100000000;
       6'h8: databits = 19'b0000101001100010110;
+      6'h9: databits
     endcase
 endmodule
 
@@ -303,6 +304,6 @@ module main(input  logic clock,
   splitter split(databits, select, inmediato_A, inmediato_B);
 
   ALU ALU_main(inmediato_A, inmediato_B, select, result);
-  
 
+endmodule
 
