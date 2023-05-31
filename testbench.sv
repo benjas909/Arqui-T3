@@ -17,29 +17,6 @@ endmodule
 
 
 /*
-module test1bitprefix();
-  logic a, b, g, p;
-  
-  prefix1bit dut(a, b, g, p);
-  
-  initial begin
-    a = 0; b = 0; #10;
-    assert (g === 0 & p === 0) else $error("00 failed");
-    $display ("00, g = %b, p = %b", g, p);
-    b = 1;		  #10;
-    assert (g === 0 & p === 1) else $error("01 failed");
-    $display ("01, g = %b, p = %b", g, p);
-    a = 1; b = 0; #10;
-    assert (g === 0 & p === 1) else $error("10 failed");
-    $display ("10, g = %b, p = %b", g, p);
-    b = 1;        #10;
-    assert (g === 1 & p === 1) else $error("11 failed");
-    $display ("11, g = %b, p = %b", g, p);
-  end
-endmodule
-
-
-
 module test2bitprefix();
   logic 	   clk, reset;
   logic [1:0]  a, b, gp_expected;

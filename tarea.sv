@@ -80,10 +80,9 @@ module not8(input  logic [7:0] a, b,
 endmodule
 
 
-module counter #(parameter N = 6)
-                (input  logic clock, 
+module counter6 (input  logic clock, 
                  input  logic reset,
-                 output logic [N - 1: 0] q);
+                 output logic [5: 0] q);
 
   always_ff @(posedge clock or posedge reset) 
     if (reset) q <= 0;
@@ -234,3 +233,37 @@ module prefixadder8(input  logic [7:0] a, b,
   assign s[0] = (a[0] ^ b[0]) ^ cin;
 
 endmodule
+
+module splitter(input  logic [18:0] data
+                output logic [2:0] sel,
+                output logic [7:0] inmA, inmB);
+  
+  assign sel = data [18:16];
+  assign inmA = data [15:8];
+  assign inmB = data [7:0];
+endmodule
+
+//
+//module ALU(input  logic [2:0] select,
+//           input  logic [7:0] Inm_A, Inm_B,
+//           output logic)
+//
+//
+//
+//module main(input  logic clock);
+//  logic reset;
+//  logic [5:0] address;
+//  logic [18:0] databits;
+//  logic [2:0] select;
+//  logic [7:0] Inmediato_A, Inmediato_B;
+//
+//  
+//  counter count(clock, reset, address);
+//
+//  ROM datarom(address, databits);
+//
+//  splitter split(databits, select);
+//
+//
+  
+
