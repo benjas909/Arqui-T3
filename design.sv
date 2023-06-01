@@ -1,41 +1,3 @@
-// USADOS EN LA TAREA
-
-module mux2(input  logic [1:0] d,
-            input  logic s,
-            output logic y);
-
-  assign y = s ? d[1] : d[0];
-endmodule
-
-
-module mux4(input  logic [3:0] d,
-            input  logic [1:0] s,
-            output logic y);
-
-  logic low, high;
-
-  mux2 lowmux(d[0], d[1], s[0], low);
-  mux2 highmux(d[2], d[3], s[0], high);
-  mux2 finalmux(low, high, s[1], y);
-endmodule
-
-
-
-module mux8(input  logic [7:0] d1, d2,
-            input  logic [2:0] s,
-            output logic y);
-
-  logic low, high;
-
-  mux4 mux4_low(d[7:4], s[1:0], low);
-  mux4 mux4_high(d[3:0], s[1:0], high);
-
-  mux2 mux2_center({low, high}, s[2], y);
-endmodule
-
-//Intentar implementar shifts
-
-
 module shift_left(input  logic [7:0] a, b,
                   output logic [7:0] y);
     
@@ -80,7 +42,7 @@ module not8(input  logic [7:0] a, b,
 endmodule
 
 
-module counter6 (input  logic clock, 
+module counter6 (input  logic clock,
                  input  logic reset,
                  output logic [5: 0] q);
 
@@ -91,20 +53,74 @@ endmodule
 
 
 module ROM(input  logic [5:0] address,
-           output logic [18:0] databits);
+           output reg [18:0] databits);
 
   always_comb
     case (address)
-      6'h0: databits = 19'b0000001011100010011;
-      6'h1: databits = 19'b0010000011101001100;
-      6'h2: databits = 19'b0100001111100000101;
-      6'h3: databits = 19'b0110001111100000010;
-      6'h4: databits = 19'b1000101110101010010;
-      6'h5: databits = 19'b1010101110101010010;
-      6'h6: databits = 19'b1100101110101010010;
-      6'h7: databits = 19'b1110101110100000000;
-      6'h8: databits = 19'b0000101001100010110;
-      6'h9: databits
+      6'b000000: databits = 19'h1A3B2;
+      6'b000001: databits = 19'h94D7F;
+      6'b000010: databits = 19'h5E61A;
+      6'b000011: databits = 19'h719F5;
+      6'b000100: databits = 19'h3C8E2;
+      6'b000101: databits = 19'h88249;
+      6'b000110: databits = 19'h4B910;
+      6'b000111: databits = 19'h127BC;
+      6'b001000: databits = 19'h9F34D;
+      6'b001001: databits = 19'h5A6F9;
+      6'b001010: databits = 19'h78D51;
+      6'b001011: databits = 19'h60398;
+      6'b001100: databits = 19'h23E06;
+      6'b001101: databits = 19'h1FAA2;
+      6'b001110: databits = 19'h4D19C;
+      6'b001111: databits = 19'h8E851;
+      6'b010000: databits = 19'h79B3A;
+      6'b010001: databits = 19'h2C4B6;
+      6'b010010: databits = 19'h596D3;
+      6'b010011: databits = 19'h41A5E;
+      6'b010100: databits = 19'h8F9F8;
+      6'b010101: databits = 19'h9B060;
+      6'b010110: databits = 19'h6E741;
+      6'b010111: databits = 19'h3D81F;
+      6'b011000: databits = 19'h51C4B;
+      6'b011001: databits = 19'h48810;
+      6'b011010: databits = 19'h7A937;
+      6'b011011: databits = 19'h5B8A5;
+      6'b011100: databits = 19'h17FCE;
+      6'b011101: databits = 19'h3641B;
+      6'b011110: databits = 19'h912ED;
+      6'b011111: databits = 19'h2F35A;
+      6'b100000: databits = 19'h4A6E1;
+      6'b100001: databits = 19'h3859D;
+      6'b100010: databits = 19'h26832;
+      6'b100011: databits = 19'h6CABF;
+      6'b100100: databits = 19'h452D4;
+      6'b100101: databits = 19'h98F61;
+      6'b100110: databits = 19'h570A6;
+      6'b100111: databits = 19'h8158D;
+      6'b101000: databits = 19'h9C639;
+      6'b101001: databits = 19'h5D1F7;
+      6'b101010: databits = 19'h832B9;
+      6'b101011: databits = 19'h7DCEF;
+      6'b101100: databits = 19'h679A5;
+      6'b101101: databits = 19'h34BDE;
+      6'b101110: databits = 19'h48753;
+      6'b101111: databits = 19'h295E4;
+      6'b110000: databits = 19'h1C6BA;
+      6'b110001: databits = 19'h4F8C2;
+      6'b110010: databits = 19'h31E57;
+      6'b110011: databits = 19'h6698F;
+      6'b110100: databits = 19'h98A1D;
+      6'b110101: databits = 19'h4C27E;
+      6'b110110: databits = 19'h7B359;
+      6'b110111: databits = 19'h5F8E4;
+      6'b111000: databits = 19'h2A4D7;
+      6'b111001: databits = 19'h799E6;
+      6'b111010: databits = 19'h6C93D;
+      6'b111011: databits = 19'h489AF;
+      6'b111100: databits = 19'h540CE;
+      6'b111101: databits = 19'h8BF16;
+      6'b111110: databits = 19'h41359;
+      6'b111111: databits = 19'h6E72A;
     endcase
 endmodule
 
@@ -145,13 +161,10 @@ module prefix4bit(input  logic [3:0] a, b,
   assign gi = leftgen | (leftpro & rightgen);
   assign pi = leftpro & rightpro;
 
-endmodule/*
-module ALU(input  logic [2:0] select,
-           input  logic [7:0] inm_A, inm_B,
-           output logic [7:0] result);
+endmodule
 
-  mux8 alu_mux(inm_A, inm_B, select, inm_A, inm_B);
-  */[7:0] s);
+
+module prefix8bit(input  logic [7:0] a, b,
                   output logic gi, pi);
             
   logic leftgen, leftpro, rightgen, rightpro;
@@ -186,8 +199,6 @@ module prefixadder8(input  logic [7:0] a, b,
   assign b2_cin = {b[0], 1'b0};
   
      
-
-  assign g_minus1 = cin;
   prefix1bit p1_0(a[0], b[0], g[0], p[0]);
   prefix1bit p1_1(a[1], b[1], g[1], p[1]);
   prefix1bit p1_2(a[2], b[2], g[2], p[2]);
@@ -235,7 +246,8 @@ module prefixadder8(input  logic [7:0] a, b,
 
 endmodule
 
-module splitter(input  logic [18:0] data
+
+module splitter(input  logic [18:0] data,
                 output logic [2:0] sel,
                 output logic [7:0] inmA, inmB);
   
@@ -250,13 +262,14 @@ module ALU_main(input  logic [7:0] inm_A, inm_B,
            output logic [7:0] result);
   
   logic [7:0] sum_result, sub_result, bleft, bright, and_res, or_res, xor_res, invA, invB;
+  logic cin = 0;
 
   
-  prefixadder8 sum(inm_A, inm_B, 1'b0, sum_result);
+  prefixadder8 sum(inm_A, inm_B, cin, sum_result);
   
   not8 invert_sub(inm_B, inm_A, invB);
 
-  prefixadder8 sub(inm_A, invB, 1'b0, sub_result);
+  prefixadder8 sub(inm_A, (~inm_B + 1'b1), cin, sub_result);
 
   shift_left shift_L(inm_A, inm_B, bleft);
 
@@ -264,7 +277,7 @@ module ALU_main(input  logic [7:0] inm_A, inm_B,
 
   and8 comp(inm_A, inm_B, and_res);
 
-  or8 dis(inm_A. inm_B, or_res);
+  or8 dis(inm_A, inm_B, or_res);
 
   xor8 exc(inm_A, inm_B, xor_res);
 
@@ -284,26 +297,20 @@ module ALU_main(input  logic [7:0] inm_A, inm_B,
 endmodule
   
 
-
-
-
-module main(input  logic clock,
-            output logic [7:0] result);
+module main(input  logic clock,reset,
+            output logic [7:0] result, inmediato_A, inmediato_B,
+            output logic [2:0] select,
+            output logic [18:0] databits);
   
-  logic reset;
   logic [5:0] address;
-  logic [18:0] databits;
-  logic [2:0] select;
-  logic [7:0] inmediato_A, inmediato_B;
 
-  
-  counter count(clock, reset, address);
+  counter6 count(clock, reset, address);
 
   ROM datarom(address, databits);
 
   splitter split(databits, select, inmediato_A, inmediato_B);
 
-  ALU ALU_main(inmediato_A, inmediato_B, select, result);
+  ALU_main ALU(inmediato_A, inmediato_B, select, result);
 
 endmodule
 
